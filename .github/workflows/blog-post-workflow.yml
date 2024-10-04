@@ -1,61 +1,55 @@
-name: Latest Content Workflow
+name: Update README with latest blog and YouTube videos
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour, adjust as needed
-  workflow_dispatch:  # Allows manual trigger from GitHub Actions page
+    - cron: '0 * * * *'  # Runs every hour
+  workflow_dispatch:  # Allows manual trigger
 
 permissions:
-  contents: write  # Grants permission to update the README
+  contents: write  # To update the README
 
 jobs:
-  update-readme-with-content:
-    name: Update README with latest blog posts and YouTube videos
+  update-readme:
+    name: Update this repo's README with latest content
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Medium Posts
+      # Step 1: Fetch latest Medium posts
       - name: Fetch Medium Posts
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
-          feed_list: "https://medium.com/feed/@akarce"  # Your Medium RSS feed URL
+          feed_list: "https://medium.com/feed/@akarce"  # Replace with your Medium RSS feed
 
-      # YouTube Videos
+      # Step 2: Fetch latest YouTube videos
       - name: Fetch YouTube Videos
-        uses: gautamkrishnar/blog-post-workflow@v1
-        with:
-          feed_list: "https://www.youtube.com/feeds/videos.xml?channel_id=UC7JlvHDfxFYKc03CwW1QjVA"  # Replace with your YouTube channel ID
-
-      # Read existing README.md content
-      - name: Read current README content
-        id: readme_content
         run: |
-          cat README.md > latest_content.txt
+          curl -s "https://www.googleapis.com/youtube/v3/search?key=$YOUTUBE_API_KEY&channelId=UC7JlvHDfxFYKc03CwW1QjVA&part=snippet,id&order=date&maxResults=5" \
+            | jq '.items[] | "- [" + .snippet.title + "](https://www.youtube.com/watch?v=" + .id.videoId + ")"' \
+            > latest_youtube_videos.txt
 
-      # Update README.md with latest Medium posts and YouTube videos
-      - name: Update README with latest content
+      # Step 3: Fetch existing README content
+      - name: Update README file
         run: |
-          medium_posts=$(cat medium_blog_post.txt)
-          youtube_videos=$(cat youtube_video_post.txt)
-          if [ -z "$medium_posts" ] && [ -z "$youtube_videos" ]; then
-            echo "No new content found."
-            exit 0
-          fi
+          README=$(cat README.md)
 
-          existing_readme=$(cat README.md)
-          # Insert both blog posts and YouTube videos into README
-          updated_readme="${existing_readme//<!-- BLOG-POST-LIST:START -->/<!-- BLOG-POST-LIST:START -->\n$medium_posts}"
-          updated_readme="${updated_readme//<!-- YOUTUBE-VIDEO-LIST:START -->/<!-- YOUTUBE-VIDEO-LIST:START -->\n$youtube_videos}"
-          echo "$updated_readme" > README.md
+          # Update the README with latest blog posts
+          BLOG_POSTS=$(cat latest_blog_post.txt)
+          README=$(echo "$README" | sed -e "/<!-- BLOG-POST-LIST:START -->/,/<!-- BLOG-POST-LIST:END -->/c\<!-- BLOG-POST-LIST:START -->\n$BLOG_POSTS\n<!-- BLOG-POST-LIST:END -->")
 
-      # Commit and push changes to README.md
-      - name: Commit and push if updated
+          # Update the README with latest YouTube videos
+          YOUTUBE_VIDEOS=$(cat latest_youtube_videos.txt)
+          README=$(echo "$README" | sed -e "/<!-- YOUTUBE-VIDEO-LIST:START -->/,/<!-- YOUTUBE-VIDEO-LIST:END -->/c\<!-- YOUTUBE-VIDEO-LIST:START -->\n$YOUTUBE_VIDEOS\n<!-- YOUTUBE-VIDEO-LIST:END -->")
+
+          # Write the updated README back to the file
+          echo "$README" > README.md
+
+      - name: Commit changes
         run: |
-          git config --local user.email "akarce@itu.edu.tr"  # Replace with your email
-          git config --local user.name "Ceyhun Akar"  # Replace with your name
+          git config --local user.email "akarce@itu.edu.tr"
+          git config --local user.name "Ceyhun Akar"
           git add README.md
           git commit -m "Updated README with latest blog posts and YouTube videos"
           git push
