@@ -1,39 +1,61 @@
-name: Latest Blog and YouTube Workflow
+name: Latest Content Workflow
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour, on the hour
-  workflow_dispatch:  # Allows manual trigger from the GitHub Actions page
+    - cron: '0 * * * *'  # Runs every hour, adjust as needed
+  workflow_dispatch:  # Allows manual trigger from GitHub Actions page
 
 permissions:
   contents: write  # Grants permission to update the README
 
 jobs:
-  update-readme:
-    name: Update README with Latest Blog Posts and YouTube Videos
+  update-readme-with-content:
+    name: Update README with latest blog posts and YouTube videos
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Create file if not exists
-        run: echo "" > latest_blog_post.txt
-
+      # Medium Posts
       - name: Fetch Medium Posts
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
-          feed_list: "https://medium.com/feed/@akarce"  # Replace with your Medium RSS feed URL
+          feed_list: "https://medium.com/feed/@akarce"  # Your Medium RSS feed URL
 
+      # YouTube Videos
       - name: Fetch YouTube Videos
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
-          youtube_channel_id: "UC7JlvHDfxFYKc03CwW1QjVA"  # Replace with your YouTube Channel ID
+          feed_list: "https://www.youtube.com/feeds/videos.xml?channel_id=UC7JlvHDfxFYKc03CwW1QjVA"  # Replace with your YouTube channel ID
 
-      - name: Commit changes
+      # Read existing README.md content
+      - name: Read current README content
+        id: readme_content
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          cat README.md > latest_content.txt
+
+      # Update README.md with latest Medium posts and YouTube videos
+      - name: Update README with latest content
+        run: |
+          medium_posts=$(cat medium_blog_post.txt)
+          youtube_videos=$(cat youtube_video_post.txt)
+          if [ -z "$medium_posts" ] && [ -z "$youtube_videos" ]; then
+            echo "No new content found."
+            exit 0
+          fi
+
+          existing_readme=$(cat README.md)
+          # Insert both blog posts and YouTube videos into README
+          updated_readme="${existing_readme//<!-- BLOG-POST-LIST:START -->/<!-- BLOG-POST-LIST:START -->\n$medium_posts}"
+          updated_readme="${updated_readme//<!-- YOUTUBE-VIDEO-LIST:START -->/<!-- YOUTUBE-VIDEO-LIST:START -->\n$youtube_videos}"
+          echo "$updated_readme" > README.md
+
+      # Commit and push changes to README.md
+      - name: Commit and push if updated
+        run: |
+          git config --local user.email "akarce@itu.edu.tr"  # Replace with your email
+          git config --local user.name "Ceyhun Akar"  # Replace with your name
           git add README.md
           git commit -m "Updated README with latest blog posts and YouTube videos"
           git push
