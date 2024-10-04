@@ -1,4 +1,4 @@
-name: Update README with Latest Content
+name: Latest Blog and YouTube Workflow
 
 on:
   schedule:
@@ -9,44 +9,31 @@ permissions:
   contents: write  # Grants permission to update the README
 
 jobs:
-  update-readme-with-content:
-    name: Update this repo's README with latest content (blog posts and YouTube videos)
+  update-readme:
+    name: Update README with Latest Blog Posts and YouTube Videos
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Create file if not exists
+        run: echo "" > latest_blog_post.txt
+
       - name: Fetch Medium Posts
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
           feed_list: "https://medium.com/feed/@akarce"  # Replace with your Medium RSS feed URL
 
-      - name: Fetch Latest YouTube Videos
-        run: |
-          YOUTUBE_FEED="https://www.youtube.com/feeds/videos.xml?channel_id=UC7JlvHDfxFYKc03CwW1QjVA"
-          curl -s $YOUTUBE_FEED | grep -E "<title>|<link>" | sed -n 's/.*<title>\(.*\)<\/title>.*/\1/p; s/.*<link>\(.*\)<\/link>.*/\1/p' > latest_youtube_videos.txt
-
-      - name: Update README
-        run: |
-          # Fetch existing README content
-          README=$(cat README.md)
-
-          # Update the README with latest blog posts
-          BLOG_POSTS=$(cat latest_blog_post.txt)
-          README=$(echo "$README" | sed -e "/<!-- BLOG-POST-LIST:START -->/,/<!-- BLOG-POST-LIST:END -->/c\<!-- BLOG-POST-LIST:START -->\n$BLOG_POSTS\n<!-- BLOG-POST-LIST:END -->")
-
-          # Update the README with latest YouTube videos
-          YOUTUBE_VIDEOS=$(cat latest_youtube_videos.txt)
-          README=$(echo "$README" | sed -e "/<!-- YOUTUBE-VIDEO-LIST:START -->/,/<!-- YOUTUBE-VIDEO-LIST:END -->/c\<!-- YOUTUBE-VIDEO-LIST:START -->\n$YOUTUBE_VIDEOS\n<!-- YOUTUBE-VIDEO-LIST:END -->")
-
-          # Write the updated README back to the file
-          echo "$README" > README.md
+      - name: Fetch YouTube Videos
+        uses: gautamkrishnar/blog-post-workflow@v1
+        with:
+          youtube_channel_id: "UC7JlvHDfxFYKc03CwW1QjVA"  # Replace with your YouTube Channel ID
 
       - name: Commit changes
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
           git add README.md
           git commit -m "Updated README with latest blog posts and YouTube videos"
           git push
