@@ -26,9 +26,10 @@ jobs:
       # Step 2: Fetch latest YouTube videos
       - name: Fetch YouTube Videos
         run: |
-          curl -s "https://www.googleapis.com/youtube/v3/search?key=$AIzaSyDaxyqtJF51iDa1PDTWtKX94nXIZIjZ6Cc&channelId=UC7JlvHDfxFYKc03CwW1QjVA&part=snippet,id&order=date&maxResults=5" \
+          curl -s "https://www.googleapis.com/youtube/v3/search?key=${{ secrets.YOUTUBE_API_KEY }}&channelId=UC7JlvHDfxFYKc03CwW1QjVA&part=snippet,id&order=date&maxResults=5" \
             | jq '.items[] | "- [" + .snippet.title + "](https://www.youtube.com/watch?v=" + .id.videoId + ")"' \
             > latest_youtube_videos.txt
+
 
       # Step 3: Fetch existing README content
       - name: Update README file
