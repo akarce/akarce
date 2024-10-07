@@ -1,4 +1,4 @@
-name: Update README with latest blog and YouTube videos
+name: Update README with latest blog posts
 
 on:
   schedule:
@@ -23,13 +23,6 @@ jobs:
         with:
           feed_list: "https://medium.com/feed/@akarce"  # Replace with your Medium RSS feed
 
-      # Step 2: Fetch latest YouTube videos
-      - name: Fetch YouTube Videos
-        run: |
-          curl -s "https://www.googleapis.com/youtube/v3/search?key=${{ secrets.YOUTUBE_API_KEY }}&channelId=UC7JlvHDfxFYKc03CwW1QjVA&part=snippet,id&order=date&maxResults=5" \
-            | jq '.items[] | "- [" + .snippet.title + "](https://www.youtube.com/watch?v=" + .id.videoId + ")"' \
-            > latest_youtube_videos.txt
-
 
       # Step 3: Fetch existing README content
       - name: Update README file
@@ -40,10 +33,6 @@ jobs:
           BLOG_POSTS=$(cat latest_blog_post.txt)
           README=$(echo "$README" | sed -e "/<!-- BLOG-POST-LIST:START -->/,/<!-- BLOG-POST-LIST:END -->/c\<!-- BLOG-POST-LIST:START -->\n$BLOG_POSTS\n<!-- BLOG-POST-LIST:END -->")
 
-          # Update the README with latest YouTube videos
-          YOUTUBE_VIDEOS=$(cat latest_youtube_videos.txt)
-          README=$(echo "$README" | sed -e "/<!-- YOUTUBE-VIDEO-LIST:START -->/,/<!-- YOUTUBE-VIDEO-LIST:END -->/c\<!-- YOUTUBE-VIDEO-LIST:START -->\n$YOUTUBE_VIDEOS\n<!-- YOUTUBE-VIDEO-LIST:END -->")
-
           # Write the updated README back to the file
           echo "$README" > README.md
 
@@ -52,5 +41,5 @@ jobs:
           git config --local user.email "akarce@itu.edu.tr"
           git config --local user.name "Ceyhun Akar"
           git add README.md
-          git commit -m "Updated README with latest blog posts and YouTube videos"
+          git commit -m "Updated README with latest blog posts"
           git push
