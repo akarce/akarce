@@ -108,7 +108,3 @@ I am a passionate Data Engineer with a deep love for coding, analytics, and open
 - [End-to-End Realtime Streaming Data Engineering Project using Python, Docker, Airflow, Spark, Kafka…](https://medium.com/towards-data-engineering/end-to-end-realtime-streaming-data-engineering-project-using-python-docker-airflow-spark-kafka-ab1568c2ad13?source=rss-b1986c49ca90------2)
 - [Udacity Data Pipeline with Airflow](https://medium.com/@akarce/udacity-data-pipeline-with-airflow-60f04f99efed?source=rss-b1986c49ca90------2)
 <!-- BLOG-POST-LIST:END -->
-
-## 🎥 Latest YouTube Videos
-<!-- YOUTUBE-VIDEO-LIST:START -->
-<!-- YOUTUBE-VIDEO-LIST:END -->
