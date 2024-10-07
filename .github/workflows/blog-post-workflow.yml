@@ -1,45 +1,23 @@
-name: Update README with latest blog posts
+name: Latest blog post workflow
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour
-  workflow_dispatch:  # Allows manual trigger
+    - cron: '0 * * * *'  # Runs every hour, on the hour
+  workflow_dispatch:  # Allows manual trigger from the GitHub Actions page
 
 permissions:
-  contents: write  # To update the README
+  contents: write  # Grants permission to update the README
 
 jobs:
-  update-readme:
-    name: Update this repo's README with latest content
+  update-readme-with-blog:
+    name: Update this repo's README with latest blog posts
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 1: Fetch latest Medium posts
       - name: Fetch Medium Posts
         uses: gautamkrishnar/blog-post-workflow@v1
         with:
-          feed_list: "https://medium.com/feed/@akarce"  # Replace with your Medium RSS feed
-
-
-      # Step 3: Fetch existing README content
-      - name: Update README file
-        run: |
-          README=$(cat README.md)
-
-          # Update the README with latest blog posts
-          BLOG_POSTS=$(cat latest_blog_post.txt)
-          README=$(echo "$README" | sed -e "/<!-- BLOG-POST-LIST:START -->/,/<!-- BLOG-POST-LIST:END -->/c\<!-- BLOG-POST-LIST:START -->\n$BLOG_POSTS\n<!-- BLOG-POST-LIST:END -->")
-
-          # Write the updated README back to the file
-          echo "$README" > README.md
-
-      - name: Commit changes
-        run: |
-          git config --local user.email "akarce@itu.edu.tr"
-          git config --local user.name "Ceyhun Akar"
-          git add README.md
-          git commit -m "Updated README with latest blog posts"
-          git push
+          feed_list: "https://medium.com/feed/@akarce"  # Replace with your Medium RSS feed URL
