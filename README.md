@@ -103,7 +103,7 @@ I am a passionate Data Engineer with a deep love for coding, analytics, and open
 ## 📝 Latest Blog Posts
 <!-- BLOG-POST-LIST:START -->
 - [Data Engineering with Reddit Api, Airflow, Hive, Postgres, MinIO, Nifi, Trino, Tableau and Superset…](https://towardsdev.com/data-engineering-with-reddit-api-airflow-hive-postgres-minio-nifi-trino-tableau-and-superset-c5dd71483151?source=rss-b1986c49ca90------2)
-- [Data Engineering with Reddit Api, Airflow, Hive, Postgres, MinIO, Nifi, Trino, Tableau and Superset…](https://towardsdev.com/data-engineering-with-reddit-api-airflow-hive-postgres-minio-nifi-trino-tableau-and-superset-6a35bff30fd0?source=rss-b1986c49ca90------2)
+- [Data Engineering with Reddit Api, Airflow, Hive, Postgres, MinIO, Nifi, Trino, Tableau and Superset](https://towardsdev.com/data-engineering-with-reddit-api-airflow-hive-postgres-minio-nifi-trino-tableau-and-superset-6a35bff30fd0?source=rss-b1986c49ca90------2)
 - [End to End Data Engineering Project — Airflow, Kafka,Cassandra, MongoDB, Docker, EmailOperator…](https://towardsdev.com/end-to-end-data-engineering-project-airflow-kafka-cassandra-mongodb-docker-emailoperator-07d48d27bee2?source=rss-b1986c49ca90------2)
 - [End-to-End Realtime Streaming Data Engineering Project using Python, Docker, Airflow, Spark, Kafka…](https://medium.com/towards-data-engineering/end-to-end-realtime-streaming-data-engineering-project-using-python-docker-airflow-spark-kafka-ab1568c2ad13?source=rss-b1986c49ca90------2)
 - [Udacity Data Pipeline with Airflow](https://medium.com/@akarce/udacity-data-pipeline-with-airflow-60f04f99efed?source=rss-b1986c49ca90------2)
