@@ -39,7 +39,7 @@ I am a passionate Data Engineer with a deep love for coding, analytics, and open
 </div>
 
 
-- 🔭 I’m currently working on projects involving: \
+- 🔭 I’m currently working on projects involving: 
   
 <a href="https://www.python.org/" target="_blank"> <img src="https://cdn.icon-icons.com/icons2/1508/PNG/512/python_104451.png" alt="python"  style="height: 3rem"/> </a>
 <a href="https://www.gnu.org/software/bash/"><img height="50" src="https://user-images.githubusercontent.com/25181517/192158606-7c2ef6bd-6e04-47cf-b5bc-da2797cb5bda.png" alt="bash" >
@@ -57,7 +57,7 @@ I am a passionate Data Engineer with a deep love for coding, analytics, and open
 <!-- Commented out
 <a href="https://cloud.google.com/" target="_blank"> <img src="https://www.sophos.com/sites/default/files/2022-02/googlecloud.png" alt="gcp" style="height: 3rem"/> </a>
  -->
-- 🛠️ Databases I work with: \
+- 🛠️ Databases I work with: 
   
 <a href="https://www.postgresql.org/" target="_blank"> <img src="https://img.icons8.com/color/512/postgreesql.png" alt="postgresql"  style="height: 3rem"/> </a>
 <a href="https://www.mysql.com/" target="_blank"> <img src="https://img.icons8.com/color/512/mysql-logo.png" alt="mysql"  style="height: 3rem"/> </a>
@@ -68,7 +68,7 @@ I am a passionate Data Engineer with a deep love for coding, analytics, and open
 <!-- Commented out
 <a href="https://redis.io/"><img height="50" src="https://user-images.githubusercontent.com/25181517/182884894-d3fa6ee0-f2b4-4960-9961-64740f533f2a.png">
  -->
-- 📊 BI Tools: \
+- 📊 BI Tools: 
   
 <a href="https://www.elastic.co/kibana" target="_blank"> <img src="https://brandslogos.com/wp-content/uploads/images/large/elastic-kibana-logo.png" alt="kibana"  style="height: 3rem"/> </a>
 <a href="https://www.tableau.com/"> <img height="50" src="https://logos-world.net/wp-content/uploads/2021/10/Tableau-Symbol.png" alt="tableau" >
@@ -79,7 +79,7 @@ I am a passionate Data Engineer with a deep love for coding, analytics, and open
 <a href="https://dbeaver.io/"> <img height="50" src="https://upload.wikimedia.org/wikipedia/commons/b/b5/DBeaver_logo.svg" alt="dbeaver" >
  -->
 
-- 🌱 I’m currently learning: \
+- 🌱 I’m currently learning: 
   
 <a href="https://flink.apache.org/" target="_blank"> <img height="50" src="https://flink.apache.org/img/logo/png/200/flink_squirrel_200_color.png" alt="flink" >
 <a href="https://neo4j.com//" target="_blank"> <img height="50" src="https://user-images.githubusercontent.com/25181517/182884027-02cf00e4-6ac5-49a8-816d-3287a26bc5b4.png">
