@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   update-readme:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +28,7 @@ jobs:
           tag_post_pre_newline: true
           item_exec: |
             post.url = post.url.split('?')[0];
-            post.title = post.title.replace(/\s+\u2014\s+/g, ': ');
+            post.title = post.title.replace(/\s*\u2014\s*/g, ': ');
             if (/^Udacity Data Pipeline/.test(post.title)) {
               post = null;
             } else if (/Reddit Api/i.test(post.title)) {
@@ -38,8 +39,9 @@ jobs:
               post.title = post.title.replace('Kafka,Cassandra', 'Kafka, Cassandra');
             }
           commit_message: "chore: refresh Medium posts"
+          dummy_commit_message: "chore: keep the daily feed refresh active"
           committer_username: akarce
-          committer_email: akarce@users.noreply.github.com
+          committer_email: 39713866+akarce@users.noreply.github.com
 
       - name: YouTube videos
         uses: gautamkrishnar/blog-post-workflow@f177491c77670f150ab4e9b9890254d8eba4164b # v1 (1.9.7)
@@ -49,6 +51,9 @@ jobs:
           feed_list: https://www.youtube.com/feeds/videos.xml?playlist_id=UULF7JlvHDfxFYKc03CwW1QjVA
           max_post_count: 3
           template: "- [$title]($url)$newline"
+          item_exec: |
+            post.title = post.title.replace(/\s*\u2014\s*/g, ': ');
+          enable_keepalive: false
           commit_message: "chore: refresh YouTube videos"
           committer_username: akarce
-          committer_email: akarce@users.noreply.github.com
+          committer_email: 39713866+akarce@users.noreply.github.com
