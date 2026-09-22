@@ -1,23 +1,54 @@
-name: Latest blog post workflow
+name: Refresh posts and videos
+
+# Replaces the hourly workflow in akarce/akarce. Also delete jekyll-gh-pages.yml in
+# that repo: it publishes a duplicate page at akarce.github.io/akarce/.
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour, on the hour
-  workflow_dispatch:  # Allows manual trigger from the GitHub Actions page
+    - cron: "23 5 * * *"
+  workflow_dispatch:
 
 permissions:
-  contents: write  # Grants permission to update the README
+  contents: write
 
 jobs:
-  update-readme-with-blog:
-    name: Update this repo's README with latest blog posts
+  update-readme:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Fetch Medium Posts
-        uses: gautamkrishnar/blog-post-workflow@v1
+      - name: Medium posts
+        uses: gautamkrishnar/blog-post-workflow@f177491c77670f150ab4e9b9890254d8eba4164b # v1 (1.9.7)
         with:
-          feed_list: "https://medium.com/feed/@akarce"  # Replace with your Medium RSS feed URL
+          feed_list: https://medium.com/feed/@akarce
+          max_post_count: 5
+          template: "- [$title]($url)$newline"
+          # Put the first item on its own line; otherwise GitHub renders it as raw text.
+          tag_post_pre_newline: true
+          item_exec: |
+            post.url = post.url.split('?')[0];
+            post.title = post.title.replace(/\s+\u2014\s+/g, ': ');
+            if (/^Udacity Data Pipeline/.test(post.title)) {
+              post = null;
+            } else if (/Reddit Api/i.test(post.title)) {
+              var part2 = post.url.indexOf('c5dd71483151') > -1;
+              post.title = 'Data Engineering with Reddit API, Airflow, Hive, NiFi, Trino and Superset (Part ' + (part2 ? '2' : '1') + ')';
+              if (part2 && post.date) post.date = new Date(post.date.getTime() - 12 * 3600 * 1000);
+            } else if (post.url.indexOf('07d48d27bee2') > -1) {
+              post.title = post.title.replace('Kafka,Cassandra', 'Kafka, Cassandra');
+            }
+          commit_message: "chore: refresh Medium posts"
+          committer_username: akarce
+          committer_email: akarce@users.noreply.github.com
+
+      - name: YouTube videos
+        uses: gautamkrishnar/blog-post-workflow@f177491c77670f150ab4e9b9890254d8eba4164b # v1 (1.9.7)
+        with:
+          comment_tag_name: YOUTUBE-VIDEOS
+          tag_post_pre_newline: true
+          feed_list: https://www.youtube.com/feeds/videos.xml?playlist_id=UULF7JlvHDfxFYKc03CwW1QjVA
+          max_post_count: 3
+          template: "- [$title]($url)$newline"
+          commit_message: "chore: refresh YouTube videos"
+          committer_username: akarce
+          committer_email: akarce@users.noreply.github.com

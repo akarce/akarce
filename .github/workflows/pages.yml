@@ -1,0 +1,35 @@
+name: Redirect the old profile page
+
+# akarce.github.io/akarce/ used to render this README with Jekyll. Old links (the
+# YouTube channel, for one) still point there, so it now redirects to the real site.
+
+on:
+  push:
+    branches: [main]
+    paths: ["redirect/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: redirect
+      - id: deployment
+        uses: actions/deploy-pages@v4
