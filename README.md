@@ -18,6 +18,12 @@ Data engineer in Istanbul. I build streaming pipelines and the secure, multi-ten
 #### Latest writing
 
 <!-- BLOG-POST-LIST:START -->
+- [ELK Stack Mastery: Building a Scalable Log Management System](https://medium.com/towards-data-engineering/elk-stack-mastery-building-a-scalable-log-management-system-7adc64313336)
+- [Data Engineering with Reddit API, Airflow, Hive, NiFi, Trino and Superset &lpar;Part 1&rpar;](https://towardsdev.com/data-engineering-with-reddit-api-airflow-hive-postgres-minio-nifi-trino-tableau-and-superset-6a35bff30fd0)
+- [Data Engineering with Reddit API, Airflow, Hive, NiFi, Trino and Superset &lpar;Part 2&rpar;](https://towardsdev.com/data-engineering-with-reddit-api-airflow-hive-postgres-minio-nifi-trino-tableau-and-superset-c5dd71483151)
+- [End to End Data Engineering Project: Airflow, Kafka, Cassandra, MongoDB, Docker, EmailOperator…](https://towardsdev.com/end-to-end-data-engineering-project-airflow-kafka-cassandra-mongodb-docker-emailoperator-07d48d27bee2)
+- [End-to-End Realtime Streaming Data Engineering Project using Python, Docker, Airflow, Spark, Kafka…](https://medium.com/towards-data-engineering/end-to-end-realtime-streaming-data-engineering-project-using-python-docker-airflow-spark-kafka-ab1568c2ad13)
+
 <!-- BLOG-POST-LIST:END -->
 
 #### Latest videos
