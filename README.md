@@ -30,6 +30,6 @@ Data engineer in Istanbul. I build streaming pipelines and the secure, multi-ten
 
 <!-- YOUTUBE-VIDEOS:START -->
 - [ELK Stack Mastery: Building a Scalable Log Management System](https://www.youtube.com/watch?v=U1i5sIZzEQM)
-- [Building a Real-Time Data Streaming Pipeline | End to End Project with Kafka Spark and Elasticsearch](https://www.youtube.com/watch?v=RQ7nnobb1N0)
+- [Kafka Project: End-to-End Streaming Pipeline with Spark and Elasticsearch](https://www.youtube.com/watch?v=RQ7nnobb1N0)
 
 <!-- YOUTUBE-VIDEOS:END -->
